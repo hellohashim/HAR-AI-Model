@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'signup_screen.dart';
+import 'login_Screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SinupScreen extends StatefulWidget {
+  const SinupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _SignInScreenState();
+  State<SinupScreen> createState() => _SinupScreenState();
 }
 
-class _SignInScreenState extends State<LoginScreen> {
+class _SinupScreenState extends State<SinupScreen> {
   bool _isPasswordVisible = false;
+  String _emailAddress = "";
+  String _password = "";
+  String _confirmPassword = "";
+  bool _passwordsMatch = true;
 
   // Colors extracted from the image
   final Color _primaryOrange = const Color(0xFFFF8C53); // Lighter orange gradient start
@@ -89,7 +93,7 @@ class _SignInScreenState extends State<LoginScreen> {
                       SizedBox(height: 24),
                       
                       Text(
-                        "Sign In To TrainMax",
+                        "Sign Up For Free",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 28,
@@ -113,13 +117,13 @@ class _SignInScreenState extends State<LoginScreen> {
               ],
             ),
             // Form Section
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 10),
-                  
                   // -- Email Field --
                   _buildLabel("Email Address"),
                   const SizedBox(height: 8),
@@ -143,6 +147,11 @@ class _SignInScreenState extends State<LoginScreen> {
                       ),
                       
                     ),
+
+                    onChanged: (value) {
+                      _emailAddress = value;
+                    }
+
                   ),
 
                   const SizedBox(height: 15),
@@ -182,41 +191,98 @@ class _SignInScreenState extends State<LoginScreen> {
                         },
                       ),
                     ),
+                    
+                    onChanged: (value) {
+                      _password = value;
+                    }
                   ),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: RichText(
-                        text: TextSpan(
-                          text: "Forgot Password?",
-                          style: const TextStyle(
-                            color: Color.fromARGB(255, 255, 115, 0),
-                            decoration: TextDecoration.underline,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => LoginScreen()),
-                              );
-                            },
+
+                  const SizedBox(height: 15),
+
+
+                  // -- Password Field --
+                  // -- Confirm Password Field --
+                  _buildLabel("Confirm Password"),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    obscureText: !_isPasswordVisible,
+                    style: TextStyle(color: _blackColor, fontWeight: FontWeight.w500),
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: const EdgeInsets.all(20),
+
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 12),
+                        child: Icon(Icons.lock_outline_rounded, color: _blackColor),
+                      ),
+
+                      // BORDER CHANGES IN REAL-TIME:
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide(
+                          color: _passwordsMatch ? _borderColor : Colors.red,
+                          width: 1,
                         ),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide(
+                          color: _passwordsMatch ? _borderColor : Colors.red,
+                          width: 2.5,
+                        ),
+                      ),
+
+                      suffixIcon: _passwordsMatch
+                          ? IconButton(
+                              icon: Icon(
+                                _isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _isPasswordVisible = !_isPasswordVisible;
+                                });
+                              },
+                            )
+                          : const Icon(Icons.error, color: Colors.red),
                     ),
+
+                    // REAL-TIME VALIDATION
+                    onChanged: (value) {
+                      setState(() {
+                        _confirmPassword = value;
+                        _passwordsMatch = (_password == _confirmPassword);
+                      });
+                    },
+                  ),
+
+                  // SHOW RED WARNING TEXT IF NOT MATCHED
+                  if (!_passwordsMatch)
+                    const Padding(
+                      padding: EdgeInsets.only(top: 6, left: 5),
+                      child: Text(
+                        "Passwords do not match",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                   ),
 
                   const SizedBox(height: 20),
 
-                  // -- Sign In Button --
+                  // -- Sign Up Button --
                   SizedBox(
                     width: double.infinity,
                     height: 60,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: _passwordsMatch && _password.isNotEmpty ? () {
+                        // Sign up logic
+                      } : null,   // disables button
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color.fromARGB(255, 255, 115, 0),
                         foregroundColor: Colors.white,
@@ -229,7 +295,7 @@ class _SignInScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
                           Text(
-                            "Sign In",
+                            "Sign Up",
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -241,60 +307,21 @@ class _SignInScreenState extends State<LoginScreen> {
                     ),
                   ),
 
-                  const SizedBox(height: 20),
-                  // -- Google Sign In Button --
-                  Container(
-                    height: 60,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade300),
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.white,
-                    ),
-                    child: TextButton(
-                      onPressed: () {},
-                      style: TextButton.styleFrom(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // Google G Logo
-                          Image.network(
-                            'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/240px-Google_%22G%22_logo.svg.png',
-                            height: 24,
-                            errorBuilder: (context, error, stackTrace) {
-                              return const Icon(Icons.g_mobiledata, size: 40, color: Colors.blue);
-                            },
-                          ),
-                          const SizedBox(width: 12),
-                          const Text(
-                            "Sign in with Google",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black87,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
+ 
                   const SizedBox(height: 40),
 
                   // -- Footer Links --
                 Center(
                   child: RichText(
                     text: TextSpan(
-                      text: "Don't have an account? ",
+                      text: "Already have an account? ",
                       style: const TextStyle(
                         color: Color.fromARGB(255, 76, 76, 76),
                         fontSize: 15,
                       ),
                       children: [
                         TextSpan(
-                          text: "Sign Up.",
+                          text: "Sign In.",
                           style: const TextStyle(
                             color: Color.fromARGB(255, 255, 115, 0),
                             decoration: TextDecoration.underline,
@@ -306,7 +333,7 @@ class _SignInScreenState extends State<LoginScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SinupScreen()),
+                                    builder: (context) => LoginScreen()),
                               );
                             },
                         ),

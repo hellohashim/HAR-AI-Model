@@ -1,0 +1,333 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
+
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<LoginScreen> {
+  bool _isPasswordVisible = false;
+
+  // Colors extracted from the image
+  final Color _primaryOrange = const Color(0xFFFF8C53); // Lighter orange gradient start
+  final Color _borderColor = Color.fromARGB(255, 255, 115, 0);   // Darker orange for border
+  final Color _blackColor = const Color(0xFF1A1D26);
+  final Color _greyFillColor = const Color(0xFFF3F4F6);
+  final Color _textGrey = const Color(0xFF9CA3AF);
+
+  @override
+  Widget build(BuildContext context) {
+    // Getting screen size for responsive layout
+    final Size size = MediaQuery.of(context).size;
+
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Top Section with Background Image and Gradient Fade
+            Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                // 1. Background Image
+                SizedBox(
+                  height: size.height * 0.45,
+                  width: double.infinity,
+                  child: Image.asset(
+                    'assets/images/sign_in_up_cover_pic.jpg',
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                  ),
+                ),
+                // 2. White Gradient Overlay to fade the image into the background
+                Container(
+                  height: size.height * 0.45,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.white.withOpacity(0.0), // Transparent at top
+                        Colors.white.withOpacity(0.8),
+                        Colors.white, // Solid white at bottom
+                      ],
+                      stops: const [0.4, 0.8, 1.0],
+                    ),
+                  ),
+                ),
+                // 3. Logo and Header Content positioned on top of the fade
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                        SizedBox(height: 120),
+                        Container(
+                        height: 70,
+                        width: 80,
+                        padding: EdgeInsets.only(left: 5, right: 5, top: 3, bottom: 3),
+                        decoration: BoxDecoration(
+                          color: _borderColor,
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: _borderColor.withOpacity(0.3),
+                              blurRadius: 15,
+                             
+                            )
+                          ],
+                        ),
+                        child: Image.asset(
+                          'assets/images/logo2.png',
+                          width: 20,
+                          height: 20,
+                        ),
+                      ),
+                      SizedBox(height: 24),
+                      
+                      Text(
+                        "Sign In To TrainMax",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 28,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      // Subtitle
+                      Text(
+                        "Let's personalize your fitness with AI",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            // Form Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 10),
+                  
+                  // -- Email Field --
+                  _buildLabel("Email Address"),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    style: TextStyle(color: _blackColor, fontWeight: FontWeight.w500),
+                    decoration: InputDecoration(
+
+                      contentPadding: const EdgeInsets.all(20),
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 12),
+                        child: Icon(Icons.mail_outline_rounded, color: _blackColor),
+                      ),
+                      // The focused border state shown in the image (Orange border)
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide(color: _borderColor, width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide(color: _borderColor, width: 2.5),
+                      ),
+                      
+                    ),
+                  ),
+
+                  const SizedBox(height: 15),
+
+                  // -- Password Field --
+                  _buildLabel("Password"),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    obscureText: !_isPasswordVisible,
+                    style: TextStyle(color: _blackColor, fontWeight: FontWeight.w500),
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: const Color.fromARGB(255, 255, 255, 255),
+                      contentPadding: const EdgeInsets.all(20),
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 12),
+                        child: Icon(Icons.lock_outline_rounded, color: _blackColor),
+                      ),
+                      // Default border for password (no border/grey as per image)
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide(color: _borderColor, width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide(color: _borderColor, width: 2.5),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        "Forgot Password",
+                        style: TextStyle(
+                          color: _borderColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // -- Sign In Button --
+                  SizedBox(
+                    width: double.infinity,
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 255, 115, 0),
+                        foregroundColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            "Sign In",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(width: 12),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+                  // -- Google Sign In Button --
+                  Container(
+                    height: 60,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(30),
+                      color: Colors.white,
+                    ),
+                    child: TextButton(
+                      onPressed: () {},
+                      style: TextButton.styleFrom(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Google G Logo
+                          Image.network(
+                            'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/240px-Google_%22G%22_logo.svg.png',
+                            height: 24,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Icon(Icons.g_mobiledata, size: 40, color: Colors.blue);
+                            },
+                          ),
+                          const SizedBox(width: 12),
+                          const Text(
+                            "Sign in with Google",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black87,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 40),
+
+                  // -- Footer Links --
+                Center(
+                  child: RichText(
+                    text: TextSpan(
+                      text: "Don't have an account? ",
+                      style: const TextStyle(
+                        color: Color.fromARGB(255, 76, 76, 76),
+                        fontSize: 15,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: "Sign Up.",
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 255, 115, 0),
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              // Navigate to login page
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()),
+                              );
+                            },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                  const SizedBox(height: 16),
+                  
+                  const SizedBox(height: 40),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Helper widget for Labels
+  Widget _buildLabel(String text) {
+    return Text(
+      text,
+      style: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w700,
+        color: Colors.black87,
+      ),
+    );
+  }
+
+}

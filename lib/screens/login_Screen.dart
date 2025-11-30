@@ -1,6 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'forgot_password_screen.dart';
 import 'signup_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';  // <-- ADD THIS
+import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,7 +15,16 @@ class LoginScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<LoginScreen> {
   bool _isPasswordVisible = false;
+  TextEditingController _emailAddress = TextEditingController();
+  TextEditingController _password =  TextEditingController();
 
+  signin() async
+  {
+    FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _emailAddress.text,
+      password: _password.text
+    );
+  }
   // Colors extracted from the image
   final Color _primaryOrange = const Color(0xFFFF8C53); // Lighter orange gradient start
   final Color _borderColor = Color.fromARGB(255, 255, 115, 0);   // Darker orange for border
@@ -124,6 +137,7 @@ class _SignInScreenState extends State<LoginScreen> {
                   _buildLabel("Email Address"),
                   const SizedBox(height: 8),
                   TextFormField(
+                    controller: _emailAddress,
                     style: TextStyle(color: _blackColor, fontWeight: FontWeight.w500),
                     decoration: InputDecoration(
 
@@ -151,6 +165,7 @@ class _SignInScreenState extends State<LoginScreen> {
                   _buildLabel("Password"),
                   const SizedBox(height: 8),
                   TextFormField(
+                    controller: _password,
                     obscureText: !_isPasswordVisible,
                     style: TextStyle(color: _blackColor, fontWeight: FontWeight.w500),
                     decoration: InputDecoration(
@@ -198,12 +213,7 @@ class _SignInScreenState extends State<LoginScreen> {
                             fontSize: 16,
                           ),
                           recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => LoginScreen()),
-                              );
-                            },
+                            ..onTap = (()=>Get.to(ForgotPasswordScreen())),
                         ),
                       ),
                     ),
@@ -216,7 +226,7 @@ class _SignInScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     height: 60,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: (()=>signin()),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color.fromARGB(255, 255, 115, 0),
                         foregroundColor: Colors.white,
@@ -301,14 +311,7 @@ class _SignInScreenState extends State<LoginScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                           recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              // Navigate to login page
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SinupScreen()),
-                              );
-                            },
+                            ..onTap = (()=>Get.to(SinupScreen())),
                         ),
                       ],
                     ),

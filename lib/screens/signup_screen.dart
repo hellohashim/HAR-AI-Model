@@ -1,6 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:get/get.dart';
+import 'package:get/utils.dart';
 import 'login_Screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';  // <-- ADD THIS
+import 'package:work_out_app/screens/wrapper.dart';
 
 class SinupScreen extends StatefulWidget {
   const SinupScreen({super.key});
@@ -11,14 +16,48 @@ class SinupScreen extends StatefulWidget {
 
 class _SinupScreenState extends State<SinupScreen> {
   bool _isPasswordVisible = false;
-  String _emailAddress = "";
-  String _password = "";
+  TextEditingController _emailAddress = TextEditingController();
+  TextEditingController _password = TextEditingController();
   String _confirmPassword = "";
   bool _passwordsMatch = true;
 
+  signup() async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailAddress.text.trim(),
+        password: _password.text,
+      );
+
+      // Successfully created account, navigate to Wrapper
+      Get.offAll(Wrapper());
+    } on FirebaseAuthException catch (e) {
+      String message = '';
+      if (e.code == 'weak-password') {
+        message = 'The password provided is too weak.';
+      } else if (e.code == 'email-already-in-use') {
+        message = 'The account already exists for that email.';
+      } else {
+        message = e.message ?? 'An error occurred';
+      }
+
+      // Show a snackbar with error
+      Get.snackbar(
+        'Sign Up Failed',
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
   // Colors extracted from the image
-  final Color _primaryOrange = const Color(0xFFFF8C53); // Lighter orange gradient start
-  final Color _borderColor = Color.fromARGB(255, 255, 115, 0);   // Darker orange for border
+  final Color _primaryOrange = const Color(0xFFFF8C53); 
+  final Color _borderColor = Color.fromARGB(255, 255, 115, 0);
   final Color _blackColor = const Color(0xFF1A1D26);
   final Color _greyFillColor = const Color(0xFFF3F4F6);
   final Color _textGrey = const Color(0xFF9CA3AF);
@@ -128,6 +167,7 @@ class _SinupScreenState extends State<SinupScreen> {
                   _buildLabel("Email Address"),
                   const SizedBox(height: 8),
                   TextFormField(
+                    controller: _emailAddress,
                     style: TextStyle(color: _blackColor, fontWeight: FontWeight.w500),
                     decoration: InputDecoration(
 
@@ -148,9 +188,6 @@ class _SinupScreenState extends State<SinupScreen> {
                       
                     ),
 
-                    onChanged: (value) {
-                      _emailAddress = value;
-                    }
 
                   ),
 
@@ -160,6 +197,7 @@ class _SinupScreenState extends State<SinupScreen> {
                   _buildLabel("Password"),
                   const SizedBox(height: 8),
                   TextFormField(
+                    controller: _password,
                     obscureText: !_isPasswordVisible,
                     style: TextStyle(color: _blackColor, fontWeight: FontWeight.w500),
                     decoration: InputDecoration(
@@ -192,9 +230,6 @@ class _SinupScreenState extends State<SinupScreen> {
                       ),
                     ),
                     
-                    onChanged: (value) {
-                      _password = value;
-                    }
                   ),
 
                   const SizedBox(height: 15),
@@ -254,7 +289,7 @@ class _SinupScreenState extends State<SinupScreen> {
                     onChanged: (value) {
                       setState(() {
                         _confirmPassword = value;
-                        _passwordsMatch = (_password == _confirmPassword);
+                        _passwordsMatch = (_password.text.trim() == _confirmPassword.trim());
                       });
                     },
                   ),
@@ -280,9 +315,9 @@ class _SinupScreenState extends State<SinupScreen> {
                     width: double.infinity,
                     height: 60,
                     child: ElevatedButton(
-                      onPressed: _passwordsMatch && _password.isNotEmpty ? () {
-                        // Sign up logic
-                      } : null,   // disables button
+                      onPressed: _passwordsMatch && _password.text.isNotEmpty
+                          ? () => signup()
+                          : null,  // disables button
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color.fromARGB(255, 255, 115, 0),
                         foregroundColor: Colors.white,

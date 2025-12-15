@@ -5,15 +5,6 @@ import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
-///
-/// Example:
-/// ```dart
-/// import 'firebase_options.dart';
-/// // ...
-/// await Firebase.initializeApp(
-///   options: DefaultFirebaseOptions.currentPlatform,
-/// );
-/// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
@@ -48,6 +39,8 @@ class DefaultFirebaseOptions {
     authDomain: 'work-out-app-6fcba.firebaseapp.com',
     storageBucket: 'work-out-app-6fcba.firebasestorage.app',
     measurementId: 'G-GX00NBVRDZ',
+    // FIXED URL BELOW:
+    databaseURL: 'https://work-out-app-6fcba-default-rtdb.firebaseio.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -56,6 +49,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '362051188774',
     projectId: 'work-out-app-6fcba',
     storageBucket: 'work-out-app-6fcba.firebasestorage.app',
+    // FIXED URL BELOW:
+    databaseURL: 'https://work-out-app-6fcba-default-rtdb.firebaseio.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -65,6 +60,8 @@ class DefaultFirebaseOptions {
     projectId: 'work-out-app-6fcba',
     storageBucket: 'work-out-app-6fcba.firebasestorage.app',
     iosBundleId: 'com.example.workOutApp',
+    // FIXED URL BELOW:
+    databaseURL: 'https://work-out-app-6fcba-default-rtdb.firebaseio.com',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -74,6 +71,8 @@ class DefaultFirebaseOptions {
     projectId: 'work-out-app-6fcba',
     storageBucket: 'work-out-app-6fcba.firebasestorage.app',
     iosBundleId: 'com.example.workOutApp',
+    // FIXED URL BELOW:
+    databaseURL: 'https://work-out-app-6fcba-default-rtdb.firebaseio.com',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
@@ -84,5 +83,7 @@ class DefaultFirebaseOptions {
     authDomain: 'work-out-app-6fcba.firebaseapp.com',
     storageBucket: 'work-out-app-6fcba.firebasestorage.app',
     measurementId: 'G-4TGN9KVX5P',
+    // FIXED URL BELOW:
+    databaseURL: 'https://work-out-app-6fcba-default-rtdb.firebaseio.com',
   );
 }

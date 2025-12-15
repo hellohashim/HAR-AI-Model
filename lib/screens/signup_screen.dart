@@ -6,6 +6,7 @@ import 'package:get/utils.dart';
 import 'login_Screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';  // <-- ADD THIS
 import 'package:work_out_app/screens/wrapper.dart';
+import 'age_screen.dart';
 
 class SinupScreen extends StatefulWidget {
   const SinupScreen({super.key});
@@ -30,7 +31,7 @@ class _SinupScreenState extends State<SinupScreen> {
       );
 
       // Successfully created account, navigate to Wrapper
-      Get.offAll(Wrapper());
+      Get.offAll(() => const AgeSelectionScreen());
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'weak-password') {
@@ -40,15 +41,9 @@ class _SinupScreenState extends State<SinupScreen> {
       } else {
         message = e.message ?? 'An error occurred';
       }
-
       // Show a snackbar with error
-      Get.snackbar(
-        'Sign Up Failed',
-        message,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent,
-        colorText: Colors.white,
-      );
+      Get.snackbar('Sign Up Failed', e.message ?? 'Error', 
+      backgroundColor: Colors.redAccent, colorText: Colors.white);
     } catch (e) {
       print(e);
     }

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "362051188774",
+    "firebase_url": "https://work-out-app-6fcba-default-rtdb.firebaseio.com",
     "project_id": "work-out-app-6fcba",
     "storage_bucket": "work-out-app-6fcba.firebasestorage.app"
   },
@@ -12,7 +13,12 @@
           "package_name": "com.android.application"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "362051188774-em39tbmhsk8vd4d56pn5634kh8nruo4t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBicBUKL_Zv9cJqI4fFejLK5HqfR8ThAGQ"
@@ -20,7 +26,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362051188774-em39tbmhsk8vd4d56pn5634kh8nruo4t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "362051188774-7ol3l2kb598n84qq0gfvqipbkuv85ugh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.workOutApp"
+              }
+            }
+          ]
         }
       }
     },
@@ -31,7 +49,12 @@
           "package_name": "com.example.work_out_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "362051188774-em39tbmhsk8vd4d56pn5634kh8nruo4t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBicBUKL_Zv9cJqI4fFejLK5HqfR8ThAGQ"
@@ -39,7 +62,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362051188774-em39tbmhsk8vd4d56pn5634kh8nruo4t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "362051188774-7ol3l2kb598n84qq0gfvqipbkuv85ugh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.workOutApp"
+              }
+            }
+          ]
         }
       }
     }

@@ -12,7 +12,7 @@ import 'package:work_out_app/main.dart';
 void main() {
   testWidgets('Text entries screen loads', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const WorkoutApp());
+    await tester.pumpWidget( WorkoutApp());
 
     // Verify that the text entries screen is displayed.
     expect(find.text('Text Entries'), findsOneWidget);

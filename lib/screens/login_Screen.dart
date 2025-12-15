@@ -49,11 +49,12 @@ class _SignInScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: size.height * 0.35,
                   width: double.infinity,
-                  child: Image.asset(
-                    'assets/images/sign_in_up_cover_pic.jpg',
-                    fit: BoxFit.cover,
-                    alignment: Alignment.topCenter,
-                  ),
+                child: Image.asset(
+                  'assets/images/sign_in_up_cover_pic.jpg',
+                  fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
+                ),
+
                 ),
                 // 2. White Gradient Overlay to fade the image into the background
                 Container(

@@ -38,7 +38,25 @@ dependencies:
   firebase_auth: ^6.1.2
   firebase_database: ^12.1.0
   get: ^4.7.3
+  cloud_firestore: ^6.1.0
+  image_picker: ^1.2.1
+  firebase_storage: ^13.0.4
 
+  tflite_flutter: ^0.12.1
+  vector_math: ^2.2.0     # Helper for math conversions
+
+  # Background Execution
+  flutter_background_service: ^5.1.0
+  flutter_local_notifications: ^19.5.0
+  
+  # Local Storage (For daily stats)
+  shared_preferences: ^2.5.4
+  # UI Helper
+  permission_handler: ^12.0.1
+  sensors_plus: ^7.0.0
+  wakelock_plus: ^1.2.8
+
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -67,6 +85,7 @@ flutter:
   - assets/images/logo.jpg
   - assets/images/logo2.png
   - assets/images/sign_in_up_cover_pic.jpg
+  - assets/model.tflite
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

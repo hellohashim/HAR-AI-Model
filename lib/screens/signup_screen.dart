@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
+import 'package:work_out_app/screens/home_screen.dart';
 import 'login_Screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';  // <-- ADD THIS
 import 'package:work_out_app/screens/wrapper.dart';
-import 'age_screen.dart';
 
 class SinupScreen extends StatefulWidget {
   const SinupScreen({super.key});
@@ -31,7 +31,7 @@ class _SinupScreenState extends State<SinupScreen> {
       );
 
       // Successfully created account, navigate to Wrapper
-      Get.offAll(() => const AgeSelectionScreen());
+      Get.offAll(() => const HomeScreen());
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'weak-password') {
@@ -63,6 +63,7 @@ class _SinupScreenState extends State<SinupScreen> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [

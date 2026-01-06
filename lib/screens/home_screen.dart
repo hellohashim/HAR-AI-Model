@@ -10,6 +10,7 @@ import 'package:work_out_app/services/background_service.dart';
 const Color kBackgroundColor = Color(0xFF121212);
 const Color kCardColor = Color(0xFF1E1E1E);
 const Color kAccentGreen = Color(0xFFC0F83F);
+const Color _primaryOrange = Color.fromARGB(255, 243, 189, 73); // Lighter orange gradient start
 const Color kTextWhite = Colors.white;
 const Color kTextGrey = Colors.grey;
 const Color kAlertRed = Color(0xFFFF5252);
@@ -168,8 +169,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       const Text("Daily Report", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kTextWhite)),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        decoration: BoxDecoration(color: kAccentGreen.withOpacity(0.2), borderRadius: BorderRadius.circular(8)),
-                        child: Text("Now: $_currentStatus", style: const TextStyle(color: kAccentGreen, fontWeight: FontWeight.bold, fontSize: 12)),
+                        decoration: BoxDecoration(color: _primaryOrange.withOpacity(0.2), borderRadius: BorderRadius.circular(8)),
+                        child: Text("Now: $_currentStatus", style: const TextStyle(color: _primaryOrange, fontWeight: FontWeight.bold, fontSize: 12)),
                       )
                     ],
                   ),
@@ -205,28 +206,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     decoration: BoxDecoration(
                       color: kCardColor,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: kAccentGreen.withOpacity(0.5)),
-                      boxShadow: [BoxShadow(color: kAccentGreen.withOpacity(0.05), blurRadius: 10, spreadRadius: 1)]
+                      border: Border.all(color: _primaryOrange.withOpacity(0.5)),
+                      boxShadow: [BoxShadow(color: _primaryOrange.withOpacity(0.05), blurRadius: 10, spreadRadius: 1)]
                     ),
                     child: Column(
                       children: [
                         const Text("AI MODEL DECISION", style: TextStyle(color: kTextGrey, fontSize: 10, letterSpacing: 1.5, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 8),
-                        Text(_currentStatus.toUpperCase(), style: const TextStyle(color: kAccentGreen, fontSize: 28, fontWeight: FontWeight.w900, letterSpacing: 1.2)),
+                        Text(_currentStatus.toUpperCase(), style: const TextStyle(color: _primaryOrange, fontSize: 28, fontWeight: FontWeight.w900, letterSpacing: 1.2)),
                         const SizedBox(height: 8),
                         Text("Updated: $_lastUpdateTime", style: TextStyle(color: kTextGrey.withOpacity(0.5), fontSize: 10)),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () { FlutterBackgroundService().startService(); },
-                      style: ElevatedButton.styleFrom(backgroundColor: kAccentGreen, padding: const EdgeInsets.symmetric(vertical: 16), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-                      child: const Text("Start Workout", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kBackgroundColor)),
-                    ),
-                  ),
+                
                 ],
               ),
             );
@@ -261,17 +254,9 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Welcome, Fiter", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kTextWhite)),
-            Text("ProAthlete", style: TextStyle(color: kTextGrey, fontSize: 14)),
           ],
         ),
-        const Spacer(),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.search, color: kAccentGreen, size: 28)),
-        Stack(
-          children: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.notifications, color: kAccentGreen, size: 28)),
-            Positioned(right: 8, top: 8, child: Container(padding: const EdgeInsets.all(4), decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle), child: const Text('1', style: TextStyle(fontSize: 10, color: Colors.white)))),
-          ],
-        ),
+        
       ],
     );
   }
@@ -287,7 +272,7 @@ class StatCard extends StatelessWidget {
   const StatCard({super.key, required this.title, required this.valueText, required this.goalText, required this.percent, required this.icon, this.isAlert = false});
   @override
   Widget build(BuildContext context) {
-    final Color mainColor = isAlert ? kAlertRed : kAccentGreen;
+    final Color mainColor = isAlert ? kAlertRed : _primaryOrange;
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(color: kCardColor, borderRadius: BorderRadius.circular(16), border: isAlert ? Border.all(color: kAlertRed.withOpacity(0.5)) : null),

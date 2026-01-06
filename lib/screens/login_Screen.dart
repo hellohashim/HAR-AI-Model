@@ -38,6 +38,7 @@ class _SignInScreenState extends State<LoginScreen> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -141,13 +142,13 @@ class _SignInScreenState extends State<LoginScreen> {
                     controller: _emailAddress,
                     style: TextStyle(color: _blackColor, fontWeight: FontWeight.w500),
                     decoration: InputDecoration(
-
+                      filled: true,
+                      fillColor: Colors.white, // 🔥 ADD THIS
                       contentPadding: const EdgeInsets.all(20),
                       prefixIcon: Padding(
                         padding: const EdgeInsets.only(left: 16, right: 12),
                         child: Icon(Icons.mail_outline_rounded, color: _blackColor),
                       ),
-                      // The focused border state shown in the image (Orange border)
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
                         borderSide: BorderSide(color: _borderColor, width: 1),
@@ -156,9 +157,9 @@ class _SignInScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(16),
                         borderSide: BorderSide(color: _borderColor, width: 2.5),
                       ),
-                      
                     ),
                   ),
+
 
                   const SizedBox(height: 15),
 
@@ -252,46 +253,8 @@ class _SignInScreenState extends State<LoginScreen> {
                     ),
                   ),
 
-                  const SizedBox(height: 20),
-                  // -- Google Sign In Button --
-                  Container(
-                    height: 60,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade300),
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.white,
-                    ),
-                    child: TextButton(
-                      onPressed: () {},
-                      style: TextButton.styleFrom(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // Google G Logo
-                          Image.network(
-                            'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/240px-Google_%22G%22_logo.svg.png',
-                            height: 24,
-                            errorBuilder: (context, error, stackTrace) {
-                              return const Icon(Icons.g_mobiledata, size: 40, color: Colors.blue);
-                            },
-                          ),
-                          const SizedBox(width: 12),
-                          const Text(
-                            "Sign in with Google",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black87,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
+         
+              
                   const SizedBox(height: 40),
 
                   // -- Footer Links --

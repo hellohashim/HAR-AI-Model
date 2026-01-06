@@ -56,12 +56,17 @@ class WorkoutApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Workout Tracker',
+
       theme: ThemeData(
-        brightness: Brightness.dark, 
-        scaffoldBackgroundColor: const Color(0xFF121212),
-        useMaterial3: true,
+        brightness: Brightness.light, // ✅ FORCE LIGHT MODE
+        scaffoldBackgroundColor: Colors.white,
+        useMaterial3: false, // Material 2 is more stable for forms
       ),
-      home: Wrapper(), 
+
+      darkTheme: ThemeData.light(), // ✅ Disable dark theme
+      themeMode: ThemeMode.light,   // ✅ FORCE LIGHT
+
+      home: Wrapper(),
     );
   }
 }
